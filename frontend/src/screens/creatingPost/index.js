@@ -68,8 +68,7 @@ class CreatingPostScreen extends Component {
     }
 
     render() {
-        const { handleSubmit } = this.props;
-
+        const { handleSubmit } = this.props;        
         return (
             <div>
                 <h1>Creating Post</h1>

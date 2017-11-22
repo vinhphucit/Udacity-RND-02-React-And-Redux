@@ -36,14 +36,16 @@ class CreatingCommentScreen extends Component {
     
     onSubmit(values) {     
         const post_id = this.props.match.params.post_id;   
+        const category = this.props.match.params.category;   
         this.props.createComment(post_id, values, () => {
-            this.props.history.push(`/posts/${post_id}`);
+            this.props.history.push(`/${category}/${post_id}`);
         });
     }
     
     render() {
         const { handleSubmit } = this.props;
         const post_id = this.props.match.params.post_id;
+        const category = this.props.match.params.category;
         return (
             <div>
                 <h1>Creating Comment</h1>
@@ -62,7 +64,7 @@ class CreatingCommentScreen extends Component {
                         component={this.renderField}
                     />
                     <Button type="submit" bsStyle="primary">Submit</Button>
-                    <Link to={`/posts/${post_id}`} className="btn btn-danger">Cancel</Link>
+                    <Link to={`/${category}/${post_id}`} className="btn btn-danger">Cancel</Link>
                 </form>
             </div>
             

@@ -37,7 +37,9 @@ export const commentsReducer = (state = {
                 }
             };
         case CommentType.DELETE_COMMENT_SUCCESS:
-            return _.omit(state.comments, action.comment);
+            var newState = {...state}
+            delete newState.comments[action.comment.id]
+            return newState;
         default:
             return state;
     }

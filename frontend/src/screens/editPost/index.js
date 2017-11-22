@@ -81,14 +81,16 @@ class EditingPostScreen extends Component {
 
     onSubmit(values) {
         const post_id = this.props.match.params.post_id;
+        const category = this.props.match.params.category
         this.props.editPost(post_id, values, () => {
-            this.props.history.push('/');
+            this.props.history.push(`/${category}`);
         });
     }
 
     render() {
         const { handleSubmit } = this.props;
         const post_id = this.props.match.params.post_id
+        const category = this.props.match.params.category
         return (
             <div>
                 <h1>Editing Post</h1>
@@ -118,7 +120,7 @@ class EditingPostScreen extends Component {
                         component={this.renderField}
                     />
                     <Button type="submit" bsStyle="primary">Submit</Button>
-                    <Link to={`/posts/${post_id}`} className="btn btn-danger">Cancel</Link>
+                    <Link to={`/${category}/${post_id}`} className="btn btn-danger">Cancel</Link>
                 </form>
             </div>
 

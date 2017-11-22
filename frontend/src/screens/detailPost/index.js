@@ -29,7 +29,7 @@ class DetailPost extends Component {
 
     renderPost(){
         let {posts} = this.props.postData;
-        
+        const category = this.props.match.params.category
         if (posts) {
              const {sortType} = this.props;
              if(sortType === 'byDate'){
@@ -44,18 +44,19 @@ class DetailPost extends Component {
 
     render() {
         const post_id = this.props.match.params.post_id;
+        const category = this.props.match.params.category
         return (
             <div>
                 <h1>Post Detail</h1>
                 {this.renderPost()}
                 <h2>Comments</h2>
-                <Link to={`/posts/${post_id}/newcomment`}>
+                <Link to={`/${category}/${post_id}/newcomment`}>
                     <Button bsStyle="success">CREATE NEW COMMENT</Button>
                 </Link>
                 <ListGroup>
                 {this.renderComments()}
                 </ListGroup>
-                <Link to="/">
+                <Link to={`/${category}`}>
                     <Button bsStyle="success">BACK</Button>
                 </Link>
             </div>

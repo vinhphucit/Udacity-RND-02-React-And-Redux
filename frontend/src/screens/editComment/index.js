@@ -50,8 +50,6 @@ class EditingComment extends Component {
     onSubmit(values) {
         const post_id = this.props.match.params.post_id;
         const comment_id = this.props.match.params.comment_id;
-        console.log(this.props.match.params.comment_id)
-        console.log(comment_id)
         this.props.editComment(comment_id, values, () => {
             this.props.history.push(`/posts/${post_id}`);
         });
@@ -60,6 +58,7 @@ class EditingComment extends Component {
     render() {
         const { handleSubmit } = this.props;
         const post_id = this.props.match.params.post_id;       
+        const category = this.props.match.params.category
         return (
             <div>
                 <h1>Editing Comment</h1>
@@ -78,7 +77,7 @@ class EditingComment extends Component {
                         component={this.renderField}
                     />
                     <Button type="submit" bsStyle="primary">Submit</Button>
-                    <Link to={`/posts/${post_id}`} className="btn btn-danger">Cancel</Link>
+                    <Link to={`/${category}}/${post_id}`} className="btn btn-danger">Cancel</Link>
                 </form>
             </div>
 

@@ -19,20 +19,23 @@ class PostItem extends Component{
     }
     
     deletePost() {
+        const category = this.props.post.category
         this.props.deletePost(this.props.post.id, () => {
             this.props.history.push(`/`);    
         });
     }
     
     editPost() {
-        this.props.history.push(`/posts/${this.props.post.id}/edit`);
+        const category = this.props.post.category
+        this.props.history.push(`/${category}/${this.props.post.id}/edit`);
     }
 
     generateTitle(post, is_detail) {
+        const category = this.props.post.category
         if (is_detail) {
           return <h1>{post.title}</h1>;
         } else {
-          return <Link to={`/posts/${post.id}`} ><h2>{post.title}</h2></Link>;
+          return <Link to={`/${category}/${post.id}`} ><h2>{post.title}</h2></Link>;
         }
       }
     

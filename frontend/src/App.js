@@ -14,11 +14,12 @@ class App extends Component {
       <div className="App">          
         <div className='container'>          
             <Route exact path='/' component={HomeScreen}/>        
+            <Route exact path="/:category" component={HomeScreen}/>
             <Route exact path='/newpost' component={CreatingPostScreen}/>  
-            <Route exact path='/posts/:post_id' component={PostDetailScreen}/>    
-            <Route exact path='/posts/:post_id/newcomment' component={CreatingCommentScreen}/>
-            <Route exact path='/posts/:post_id/edit' component={EditingPostScreen}/>
-            <Route exact path='/posts/:post_id/:comment_id/edit' component={EditingCommentScreen}/>
+            <Route exact path='/:category/:post_id' component={PostDetailScreen}/>    
+            <Route exact path='/:category/:post_id/newcomment' component={CreatingCommentScreen}/>
+            <Route exact path='/:category/:post_id/edit' component={EditingPostScreen}/>
+            <Route exact path='/:category/:post_id/:comment_id/edit' component={EditingCommentScreen}/>
         </div>          
       </div>
     );
