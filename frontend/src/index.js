@@ -8,10 +8,8 @@ import { Provider } from 'react-redux'
 import configureStore from './config/configurestore'
 const store = configureStore();
 ReactDOM.render(
-    <Provider store={store}>     
-        <BrowserRouter>   
+    <Provider store={store}>       
             <App />    
-        </BrowserRouter>  
     </Provider>,
     document.getElementById('root')
 )

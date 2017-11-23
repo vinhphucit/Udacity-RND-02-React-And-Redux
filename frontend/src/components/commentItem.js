@@ -28,9 +28,10 @@ class CommentItem extends Component{
     }
     
     editComment() {
+        const category = this.props.match.params.category;
         const comment_id = this.props.comment.id;
         const post_id = this.props.postId
-        this.props.history.push(`/posts/${post_id}/${comment_id}/edit`);
+        this.props.history.push(`/${category}/${post_id}/${comment_id}/edit`);
     }
 
     render(){

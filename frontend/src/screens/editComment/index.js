@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { editComment, fetchComment } from './../../actions/comment_actions'
-
+import NotFoundScreen from './../notFound'
 
 
 class EditingComment extends Component {
@@ -57,31 +57,39 @@ class EditingComment extends Component {
 
     render() {
         const { handleSubmit } = this.props;
-        const post_id = this.props.match.params.post_id;       
+        const post_id = this.props.match.params.post_id;
         const category = this.props.match.params.category
-        return (
-            <div>
-                <h1>Editing Comment</h1>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <Field
-                        label="Author:"
-                        name="author"
-                        type="text"
-                        component={this.renderField}
-                    />
+        const { isFetching, comments } = this.props.commentData;
+        this.handleInitialize()
+        if (isFetching) {
+            return (<div></div>)
+        } else if (!comments || Object.keys(comments).length === 0 || this.props.comment.parentId !== post_id) {
+            return <NotFoundScreen />
+        } else {
+            return (
+                <div>
+                    <h1>Editing Comment</h1>
+                    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                        <Field
+                            label="Author:"
+                            name="author"
+                            type="text"
+                            component={this.renderField}
+                        />
 
-                    <Field
-                        label="Content:"
-                        name="body"
-                        type="text"
-                        component={this.renderField}
-                    />
-                    <Button type="submit" bsStyle="primary">Submit</Button>
-                    <Link to={`/${category}}/${post_id}`} className="btn btn-danger">Cancel</Link>
-                </form>
-            </div>
+                        <Field
+                            label="Content:"
+                            name="body"
+                            type="text"
+                            component={this.renderField}
+                        />
+                        <Button type="submit" bsStyle="primary">Submit</Button>
+                        <Link to={`/${category}/${post_id}`} className="btn btn-danger">Cancel</Link>
+                    </form>
+                </div>
 
-        );
+            )
+        };
     }
 }
 
@@ -99,7 +107,7 @@ function validate(values) {
 }
 
 const mapStateToProps = ({ commentData }, ownProps) => {
-    return { comment: commentData.comments[ownProps.match.params.comment_id] }
+    return { comment: commentData.comments[ownProps.match.params.comment_id], commentData }
 }
 
 const mapDispatchToProps = (dispatch) => {

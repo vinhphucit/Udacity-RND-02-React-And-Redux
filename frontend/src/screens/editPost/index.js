@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { fetchCategories } from './../../actions/category_actions';
 import { editPost, fetchPost } from './../../actions/post_actions'
-
+import NotFoundScreen from './../notFound'
 
 class EditingPostScreen extends Component {
 
@@ -91,40 +91,49 @@ class EditingPostScreen extends Component {
         const { handleSubmit } = this.props;
         const post_id = this.props.match.params.post_id
         const category = this.props.match.params.category
-        return (
-            <div>
-                <h1>Editing Post</h1>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <Field
-                        name="category"
-                        label="Category:"
-                        component={field => this.renderCategoryFields(field)}
-                    >
-                    </Field>
-                    <Field
-                        label="Author:"
-                        name="author"
-                        type="text"
-                        component={this.renderField}
-                    />
-                    <Field
-                        label="Title:"
-                        name="title"
-                        type="text"
-                        component={this.renderField}
-                    />
-                    <Field
-                        label="Content:"
-                        name="body"
-                        type="text"
-                        component={this.renderField}
-                    />
-                    <Button type="submit" bsStyle="primary">Submit</Button>
-                    <Link to={`/${category}/${post_id}`} className="btn btn-danger">Cancel</Link>
-                </form>
-            </div>
 
-        );
+        const { isFetching, posts } = this.props.postData;
+        this.handleInitialize()
+        if (isFetching) {
+            return (<div></div>)
+        } else if (!posts || Object.keys(posts).length === 0 || this.props.post.category !== category) {
+            return <NotFoundScreen />
+        } else {
+            return (
+                <div>
+                    <h1>Editing Post</h1>
+                    <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                        <Field
+                            name="category"
+                            label="Category:"
+                            component={field => this.renderCategoryFields(field)}
+                        >
+                        </Field>
+                        <Field
+                            label="Author:"
+                            name="author"
+                            type="text"
+                            component={this.renderField}
+                        />
+                        <Field
+                            label="Title:"
+                            name="title"
+                            type="text"
+                            component={this.renderField}
+                        />
+                        <Field
+                            label="Content:"
+                            name="body"
+                            type="text"
+                            component={this.renderField}
+                        />
+                        <Button type="submit" bsStyle="primary">Submit</Button>
+                        <Link to={`/${category}`} className="btn btn-danger">Cancel</Link>
+                    </form>
+                </div>
+
+            )
+        };
     }
 }
 
@@ -153,7 +162,8 @@ function validate(values) {
 const mapStateToProps = ({ categoryData, postData }, ownProps) => {
     return {
         categories: categoryData.categories,
-        post: postData.posts[ownProps.match.params.post_id]
+        post: postData.posts[ownProps.match.params.post_id],
+        postData: postData
     }
 }
 

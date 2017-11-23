@@ -6,17 +6,20 @@ export const postsReducer = (state = {
     error: null }, action) =>{            
     switch (action.type){
         case PostType.FETCH_POSTS_SUCCESS:
-        console.log(action.posts)
             return {...state,
                 posts: _.mapKeys(action.posts,'id'),
                 isFetching:false
             };
         case PostType.FETCH_POSTS_FAILURE:            
+        case PostType.FETCH_POST_DETAIL_FAILURE:
             return {
                 ...state,
+                isFetching:false,
+                posts: [],
                 error: action.error
             }
         case PostType.FETCH_POSTS_REQUEST:
+        case PostType.FETCH_POST_DETAIL_REQUEST:
             return {
                 ...state,
                 posts: {},
@@ -33,12 +36,15 @@ export const postsReducer = (state = {
         case PostType.FETCH_POST_DETAIL_SUCCESS:
             return {
                 ...state,
+                isFetching:false,
                 posts:{
                     [action.post.id]: action.post
                 }
             }   
         case PostType.DELETE_POST_SUCCESS:
-            return _.omit(state.posts, action.post);
+            var newState = {...state}
+            delete newState.posts[action.post.id]
+            return newState;
         default:
             return state;
     }

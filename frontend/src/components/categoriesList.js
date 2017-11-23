@@ -8,7 +8,6 @@ import {PropTypes} from 'prop-types'
 export default class CategoriesList extends Component {
 
     componentDidMount(){
-        console.log(JSON.stringify(this.props))
     }
 
     componentWillMount() {
@@ -42,7 +41,7 @@ export default class CategoriesList extends Component {
         return (
             <div>
                 <ListGroupItem>
-                    <Link to="/">All</Link>
+                    <Link to="/" onClick={() => this.props.fetchCategoryPosts()}>All</Link>
                 </ListGroupItem>
                 <div>{this.renderList()}</div>
             </div>

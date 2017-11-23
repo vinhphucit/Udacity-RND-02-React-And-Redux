@@ -39,12 +39,8 @@ class PostItem extends Component{
         }
       }
     
-    generateEditButtons(is_detail) {
-        if (is_detail) {
-          return <EditButtons onEdit={() => {this.editPost()}} onDelete={() => {this.deletePost()}}/>;
-        } else {
-          return null;
-        }
+    generateEditButtons() {
+        return <EditButtons onEdit={() => {this.editPost()}} onDelete={() => {this.deletePost()}}/>;
     }
 
     render(){
@@ -58,7 +54,7 @@ class PostItem extends Component{
                 <p>{post.body}</p>
                 <p>{post.commentCount} comment(s)</p>
                 <Score score={post.voteScore} onUpvote={() => {this.upvotePost()}} onDownvote={() => {this.downvotePost()}} />
-                {this.generateEditButtons(is_detail)}            
+                {this.generateEditButtons()}            
                 <hr/>
             </div>
         )

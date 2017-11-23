@@ -10,12 +10,16 @@ export const commentsReducer = (state = {
                 comments: _.mapKeys(action.comments,'id'),
                 isFetching:false
             };
-        case CommentType.FETCH_COMMENTS_FAILURE:            
+        case CommentType.FETCH_COMMENTS_FAILURE:      
+        case CommentType.FETCH_COMMENT_FAILURE:              
             return {
                 ...state,
-                error: action.error
+                isFetching:false,
+                error: action.error, 
+                comments:{}
             }
         case CommentType.FETCH_COMMENTS_REQUEST:
+        case CommentType.FETCH_COMMENT_REQUEST:
             return {
                 ...state,
                 comments: {},
@@ -32,6 +36,7 @@ export const commentsReducer = (state = {
         case CommentType.FETCH_COMMENT_SUCCESS:        
             return { 
                 ...state,
+                isFetching:false,
                 comments:{
                     [action.comment.id]: action.comment
                 }
