@@ -63,7 +63,7 @@ class EditingComment extends Component {
         this.handleInitialize()
         if (isFetching) {
             return (<div></div>)
-        } else if (!comments || Object.keys(comments).length === 0 || !this.props.comment || this.props.comment.parentId !== post_id) {
+        } else if (!comments || Object.keys(comments).length === 0 || !this.props.comment || this.props.comment.parentId !== post_id || this.props.comment.parentDeleted === true || this.props.comment.deleted === true) {
             return <NotFoundScreen />
         } else {
             return (
