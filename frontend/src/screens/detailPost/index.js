@@ -43,7 +43,7 @@ class DetailPost extends Component {
 
         if (isFetching) {
             return (<div></div>)
-        } else if (!posts || Object.keys(posts).length === 0 || this.props.post.category !== category) {
+        } else if (!posts || Object.keys(posts).length === 0 || !this.props.post || this.props.post.category !== category) {
             return <NotFoundScreen />
         } else {
             return (<div>
