@@ -14,11 +14,20 @@ import NotFoundScreen from './../notFound'
 
 class EditingComment extends Component {
 
+    constructor(){
+        super()
+        this.isInitialized = false;
+    }
+
     componentWillMount() {
         this.props.fetchComment(this.props.match.params.comment_id);
     }
     componentDidMount() {
-        this.handleInitialize();
+        
+    }
+    componentWillReceiveProps(){
+        if(!this.isInitialized)
+            this.handleInitialize();
     }
 
     handleInitialize() {
@@ -28,6 +37,7 @@ class EditingComment extends Component {
                 "body": this.props.comment.body
             };
             this.props.initialize(initData);
+            this.isInitialized=true;
         }
     }
 
@@ -50,8 +60,9 @@ class EditingComment extends Component {
     onSubmit(values) {
         const post_id = this.props.match.params.post_id;
         const comment_id = this.props.match.params.comment_id;
+        const category = this.props.match.params.category
         this.props.editComment(comment_id, values, () => {
-            this.props.history.push(`/posts/${post_id}`);
+            this.props.history.push(`/${category}/${post_id}`);
         });
     }
 
@@ -60,7 +71,6 @@ class EditingComment extends Component {
         const post_id = this.props.match.params.post_id;
         const category = this.props.match.params.category
         const { isFetching, comments } = this.props.commentData;
-        this.handleInitialize()
         if (isFetching) {
             return (<div></div>)
         } else if (!comments || Object.keys(comments).length === 0 || !this.props.comment || this.props.comment.parentId !== post_id || this.props.comment.parentDeleted === true || this.props.comment.deleted === true) {

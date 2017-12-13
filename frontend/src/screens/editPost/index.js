@@ -13,7 +13,10 @@ import { editPost, fetchPost } from './../../actions/post_actions'
 import NotFoundScreen from './../notFound'
 
 class EditingPostScreen extends Component {
-
+    constructor(){
+        super()
+        this.isInitialized = false;
+    }
     componentWillMount() {
         if (this.props.categories.length === 0) {
             this.props.fetchCategories();
@@ -22,9 +25,13 @@ class EditingPostScreen extends Component {
     }
 
     componentDidMount() {
-        this.handleInitialize();
+        
     }
-
+    componentWillReceiveProps(){
+        console.log("this.isInitialized:"+this.isInitialized)
+        if(!this.isInitialized)
+            this.handleInitialize();
+    }
     handleInitialize() {
         if (this.props.post) {
             const initData = {
@@ -34,6 +41,7 @@ class EditingPostScreen extends Component {
                 "category": this.props.post.category
             };
             this.props.initialize(initData);
+            this.isInitialized = true
         }
     }
 
@@ -93,7 +101,7 @@ class EditingPostScreen extends Component {
         const category = this.props.match.params.category
 
         const { isFetching, posts } = this.props.postData;
-        this.handleInitialize()
+        
         if (isFetching) {
             return (<div></div>)
         } else if (!posts || Object.keys(posts).length === 0 || !this.props.post || this.props.post.category !== category || this.props.post.deleted === true) {
